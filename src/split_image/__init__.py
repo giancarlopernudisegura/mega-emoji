@@ -21,6 +21,7 @@ logger.addHandler(logging.StreamHandler())
 def split_image(
     image: Image.Image, size: int
 ) -> Iterator[Tuple[int, int, Image.Image]]:
+    """Split the image into multiple square sub-images, padding as necessary."""
     width, height = image.size
     # pad image
     width = (width + size - 1) // size * size
@@ -39,6 +40,7 @@ def split_image(
 @click.option("-v", "--verbose", is_flag=True)
 @click.argument("image", type=click.Path(exists=True, dir_okay=False, readable=True))
 def cli(size: int, verbose: bool, image: str):
+    """Takes in command-line input to create a grid of images from an input image."""
     if verbose:
         logger.setLevel(logging.DEBUG)
     filename, _ = path.basename(image).split(".", maxsplit=1)
